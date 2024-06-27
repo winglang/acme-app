@@ -1,15 +1,14 @@
-bring:
-	- acme@^1                 # internal winglib created by acme platform team
+using: acme@^1
 
 resources:
   db: 
     type: KeyValueStore
 
   sockets:
-    type: acme.WebSocket
+    type: WebSocket
   
   service:
-		type: acme.WebService
+		type: WebService
     routes: 
       counterPOST:
         method: POST
@@ -24,7 +23,10 @@ resources:
       connection_string: {db.connection_string}
 	
 	website:
-		type: acme.WebSite
+		type: WebSite
     props:
+      path: ./frontend
       cors: true
-
+      env: 
+        API_URL: {service.url}
+        WS_URL:  {myBroadcaster.sockets } 
