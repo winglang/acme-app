@@ -1,0 +1,30 @@
+bring:
+	- acme@^1                 # internal winglib created by acme platform team
+
+resources:
+  db: 
+    type: KeyValueStore
+
+  sockets:
+    type: acme.WebSocket
+  
+  service:
+		type: acme.WebService
+    routes: 
+      counterPOST:
+        method: POST
+        path: /counter
+        handler: ./backend/src/handler.incrementCounter
+      counterGet:
+        method: GET
+        path: /counter
+        handler: ./backend/src/handler.getCounter
+    props:
+      cors: true
+      connection_string: {db.connection_string}
+	
+	website:
+		type: acme.WebSite
+    props:
+      cors: true
+
