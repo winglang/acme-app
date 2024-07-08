@@ -1,6 +1,7 @@
 using: acme@^1
 
 resources:
+
   db: 
     type: acme.KeyValueStore
 
@@ -8,7 +9,7 @@ resources:
     type: acme.WebSocket
   
   service:
-		type: acme.WebService
+    type: acme.WebService
     routes: 
       counterPOST:
         method: POST
@@ -22,13 +23,13 @@ resources:
         handler: ./backend/src/handler.getCounter
     props:
       cors: true
-      connection_string: {db.connection_string}
-	
-	website:
-		type: acme.WebSite
+      connection_string: { db.connection_string }
+
+  website:
+    type: acme.WebSite
     props:
       path: ./frontend
       cors: true
       env: 
         API_URL: { service.url }
-        WS_URL:  { sockets.url } 
+        WS_URL:  { sockets.url }
