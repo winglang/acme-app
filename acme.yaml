@@ -2,18 +2,20 @@ using: acme@^1
 
 resources:
   db: 
-    type: KeyValueStore
+    type: acme.KeyValueStore
 
   sockets:
-    type: WebSocket
+    type: acme.WebSocket
   
   service:
-		type: WebService
+		type: acme.WebService
     routes: 
       counterPOST:
         method: POST
         path: /counter
         handler: ./backend/src/handler.incrementCounter
+        max_concurrency: 20
+        size: small
       counterGet:
         method: GET
         path: /counter
@@ -23,10 +25,10 @@ resources:
       connection_string: {db.connection_string}
 	
 	website:
-		type: WebSite
+		type: acme.WebSite
     props:
       path: ./frontend
       cors: true
       env: 
-        API_URL: {service.url}
-        WS_URL:  {myBroadcaster.sockets } 
+        API_URL: { service.url }
+        WS_URL:  { sockets.url } 
